@@ -7,12 +7,13 @@ const options = {
 };
 
 const db = pgp(options);
+module.exports = db;
 
-db.any('select * from users where id =1;')
-    .then(function(data) {
-        // success;
-        console.log(data);
-    })
-    .catch(function(error) {
-        // error;
-    });
+// db.any('select * from users where id =1;')
+//     .then(function(data) {
+//         // success;
+//         console.log(data);
+//     })
+//     .catch(function(error) {
+//         // error;
+//     });
