@@ -25,7 +25,7 @@ create table reviews (
     content text,
     -- a single review belongs to a single restaurant
     restaurant_id integer references restaurants(id),
-    user_id integer referecnes users(id)
+    user_id integer references users(id)
 );
 
 -- this is a "linking table" withc describes the following relationships:
@@ -36,6 +36,6 @@ create table reviews (
 create table favorites (
     id serial primary key, -- this is optional
     user_id integer references users(id), -- this is a foreign key to users
-    restaurant_id integer references restaurants(id), -- FK to restaurants
+    restaurant_id integer references restaurants(id) -- FK to restaurants
 
 );
