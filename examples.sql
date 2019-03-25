@@ -6,12 +6,12 @@ select first_name as Name
 where id =1
 ;
     -- 1b. get all fields for private version
-select first_name ||' '|| last_name as Name, email, password
+select *
 	from users
 where id =1
 ;
 -- 2. get all favorites for a user by id
-select usr.first_name ||' '|| usr.last_name as Name, res.name as Favorites
+select usr.first_name ||' '|| usr.last_name as Reviewer, res.name as Favorites
 	from users usr
 	inner join favorites fav
 		on usr.id = fav.user_id
@@ -20,7 +20,7 @@ select usr.first_name ||' '|| usr.last_name as Name, res.name as Favorites
 where usr.id = 1
 ;
 -- 3. get all reviews by that user by id
-select usr.first_name ||' '|| usr.last_name as Name, res.name as Restaurant, rev.content, rev.score
+select usr.first_name ||' '|| usr.last_name as Reviewer, res.name as Restaurant, rev.content, rev.score
 	from users usr
 	inner join reviews rev
 		on rev.user_id = usr.id
@@ -32,12 +32,12 @@ where usr.id = 1
 
 -- restaurant profile
 -- 1. get all info for a restaurant by id
-select name, address, phone, menu, picture
+select *
 	from restaurants
 where id = 1
 ;
 -- 2. get all reviews for restaurant by id
-select res.name, rev.content, rev.score, usr.first_name ||' '|| usr.last_name as Name
+select res.name, rev.content, rev.score, usr.first_name ||' '|| usr.last_name as Reviewer
 	from restaurants res
 	inner join reviews rev
 		on res.id = rev.restaurant_id
