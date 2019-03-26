@@ -15,9 +15,33 @@ const User = require('../models/user');
 // });
 
 describe('Users model', () => {
+    // 😄
     it('should be able to retrieve by id', async () => {
         const theUser = await User.getById(3);
+        theUser.should.be.an.instanceOf(User);
+        // theUser.should.have.length(1);
+    });
+    // 😭
+    it('should error if no user by id', async () => {
+        const theUser = await User.getById(55);
+        expect(theUser).to.be.null;
         // theUser.should.be.an.instanceOf(User);
-        theUser.should.have.length(1);
-    })
+        // theUser.should.have.length(1);
+    });
+
+    it('should update the user', async() => {
+        // grab a user with id 2
+        const theUser = await User.getById(2);
+        // update the email
+        theUser.email = 'new@new.com';
+        // save the user
+        theUser.save()
+            .then(async (report) => {
+                // console.log(report);
+                // re-grab the user with id 2
+                const alsoTheUser = await User.getById(2);
+                // expect the eamil to be equal to the new value
+                expect(alsoTheUser.email).to.equal('new@new.com');
+            });
+    });
 });
