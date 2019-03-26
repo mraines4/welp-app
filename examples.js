@@ -12,11 +12,28 @@ function getUserById(theId) {
 
 // getUserById(3)
 //     .then(console.log);
-async function main() {
-    const user3 = await getUserById(3);
-    console.log(user3);
+// async function main() {
+//     const user3 = await getUserById(3);
+//     console.log(user3);
+// }
+// main();
+
+function main2() {
+    const idArray = [1,2,3,4];
+    idArray.forEach(async function(id) {
+        const user = await getUserById(id);
+        console.log(user);
+    })
 }
-main();
+// main2();
+
+async function main3() {
+    const user3 = await getUserById(3);
+    const user4 = await getUserById(4);
+    console.log(user3);
+    console.log(user4);
+}
+main3();
 
 function getFavByUserId(theId) {
     return db.any(`select usr.first_name ||' '|| usr.last_name as Name, res.name as Favorites from users usr inner join favorites fav on usr.id = fav.user_id inner join restaurants res on fav.restaurant_id = res.id where usr.id = ${theId}`)
