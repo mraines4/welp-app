@@ -12,6 +12,11 @@ function getUserById(theId) {
 
 // getUserById(3)
 //     .then(console.log);
+async function main() {
+    const user3 = await getUserById(3);
+    console.log(user3);
+}
+main();
 
 function getFavByUserId(theId) {
     return db.any(`select usr.first_name ||' '|| usr.last_name as Name, res.name as Favorites from users usr inner join favorites fav on usr.id = fav.user_id inner join restaurants res on fav.restaurant_id = res.id where usr.id = ${theId}`)
@@ -91,5 +96,5 @@ where rev.score > ${score}
 group by res.name, fav.user_id`)
 };
 
-limitByMinimumReview(2)
-    .then(console.log);
+// limitByMinimumReview(2)
+//     .then(console.log);
