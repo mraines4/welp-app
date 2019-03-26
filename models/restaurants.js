@@ -45,6 +45,17 @@ class Restaurant {
         where id=${this.id}
         `);
     }
+
+    static favoritesById(id) {
+        return db.one(`
+        select res.name, count(fav.user_id)
+            from restaurants res
+            inner join favorites fav
+                on res.id = fav.restaurant_id
+        where res.id = ${id}
+        group by res.name
+        `)
+    }
 };
 
 module.exports = Restaurant;

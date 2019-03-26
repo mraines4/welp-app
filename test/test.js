@@ -110,3 +110,10 @@ describe('Users model', () => {
         expect(alsoTheUser.email).to.equal('new@new.com');
     });
 });
+
+describe('inner join', () => {
+    it('should get a count of favorites for a restaurant by id', async () => {
+        const theCount = await Restaurant.favoritesById(3);
+        expect(theCount.count).to.be.equal('1');
+    })
+});
