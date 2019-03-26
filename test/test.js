@@ -114,6 +114,11 @@ describe('Users model', () => {
 describe('inner join', () => {
     it('should get a count of favorites for a restaurant by id', async () => {
         const theCount = await Restaurant.favoritesById(3);
-        expect(theCount.count).to.be.equal('1');
-    })
+        expect(parseInt(theCount.count)).to.be.equal(1);
+    });
+
+    it('should average the review score for a restaurant by id', async () => {
+        const theRest = await Restaurant.averageReviewById(2);
+        expect (parseInt(theRest.average)).to.be.equal(2);
+    });
 });

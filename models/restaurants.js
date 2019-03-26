@@ -56,6 +56,15 @@ class Restaurant {
         group by res.name
         `)
     }
+
+    static averageReviewById(id) {
+        return db.one(`select res.name, avg(rev.score) as Average
+        from restaurants res
+        inner join reviews rev
+            on res.id = rev.restaurant_id
+    where res.id = ${id}
+    group by res.name`);
+    }
 };
 
 module.exports = Restaurant;
