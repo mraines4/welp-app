@@ -23,7 +23,8 @@ values
     (5, 'Man i love Chilis, best beer in town!', 1, 1),
     (3, 'Theres no milk!, but atmosphere was okay I guess...', 3, 4),
     (1, 'Yeah I got kicked out for eating straign from the buffet', 4, 3),
-    (2, 'No apples, no bees... Pass.', 2, 2)
+    (2, 'No apples, no bees... Pass.', 2, 2),
+    (5, 'Love it woof', 2, 3)
 ;
 
 insert into favorites
