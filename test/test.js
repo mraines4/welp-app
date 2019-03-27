@@ -58,6 +58,13 @@ describe('Review model', () => {
         expect(alsoTheReview.content).to.be.equal('tis crap');
     });
 
+    it('should be able to retireve all reviews', async () => {
+        const aBunchOfReviews = await Review.getAll();
+        expect(aBunchOfReviews).to.be.an.instanceOf(Array);
+        for (let i=0; i<aBunchOfReviews.length; i++) {
+            expect(aBunchOfReviews[i]).to.be.an.instanceOf(Review);
+        }
+    })
 
 });
 
@@ -125,6 +132,23 @@ describe('inner join', () => {
     it('should give all reviews by restaurant id', async () => {
         const theRest = await Restaurant.allReviewsById(2);
         // console.log(theRest)
-        expect(theRest.length).to.be.equal(2);
+        expect(theRest).to.have.lengthOf(2);
+    })
+});
+
+describe('users and reviews', () => {
+    it('a user instance should be able to retrieve all their reviews', async () => {
+        // grab a user by id 3
+        const theUser = await User.getById(3);
+        // then get all their reviews
+        const theReviews = await theUser.getReviews();
+        // confirm that their reviews are in an array
+        expect(theReviews).to.be.an.instanceOf(Array);
+        // and that the array is the correct length, which should be 2
+        expect(theReviews).to.have.lengthOf(2);
+        // and that each one is an instance of Review
+        for (let i=0; i<theReviews.length; i++) {
+            expect(theReviews[i]).to.be.an.instanceOf(Review);
+        }
     })
 });

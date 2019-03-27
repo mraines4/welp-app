@@ -37,6 +37,22 @@ class Review {
         `);
     }
 
+    static getAll() {
+        return db.any(`select * from reviews`)
+            .then((arrayOfReviews) => {
+                return arrayOfReviews.map((reviewData) => {
+                    const aReview = new Review(
+                        reviewData.id,
+                        reviewData.score,
+                        reviewData.content,
+                        reviewData.restaurant_id,
+                        reviewData.user_id
+                    );
+                    return aReview;
+                });
+            });
+    }
+
 };
 
 module.exports = Review;
