@@ -1,6 +1,7 @@
 // bring in the database connection
 const db = require('./conn');
 const Review = require('./reviews');
+const bcrypt = require('bcryptjs');
 
 // need a User class
 // classes should start with upper case letter
@@ -44,7 +45,17 @@ class User {
         `)
     }
 
-    getReviews() {
+    setPassword(newPassword) {
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(newPassword, salt);
+        this.password = hash;
+    }
+
+    checkPassword(aPassword) {
+        return bcrypt.compareSync(aPassword, this.password);
+    }
+
+    get reviews() {
         return db.any(`select * from reviews where user_id=${this.id}`)
             .then((arrayOfReviewData) => {
                 // equivalent to using .map

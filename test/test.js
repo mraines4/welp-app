@@ -1,4 +1,3 @@
-// const assert = require('assert');
 const chai = require('chai');
 const expect = chai.expect;
 const chaiAsPromised = require('chai-as-promised');
@@ -116,6 +115,34 @@ describe('Users model', () => {
         // expect the eamil to be equal to the new value
         expect(alsoTheUser.email).to.equal('new@new.com');
     });
+
+    it('should encrypt the password', async () => {
+        // get a user with id 1
+        const password = 'bacon'
+        const theUser = await User.getById(1);
+        // set their password field to "bacon"
+        theUser.setPassword(password);
+        // compare their passwords to "Bacon"
+        expect(theUser.password).not.to.equal(password);
+        // it should be false
+    });
+
+    it('should be able to check for correct passwords', async() => {
+        // get a user with id 1
+        const theUser = await User.getById(1);
+        // set their password field to bacon
+        theUser.setPassword('bacon');
+        // save them to the database
+        await theUser.save();
+        // get them back out of the database
+        const sameUser = await User.getById(1);
+        // ask them if their password is bacon
+        const isCorrectPassword = sameUser.checkPassword('bacon');
+        expect(isCorrectPassword).to.be.true;
+
+        const isNotCorrectPassword = sameUser.checkPassword('tofu');
+        expect(isNotCorrectPassword).to.be.false;
+    })
 });
 
 describe('inner join', () => {
@@ -141,7 +168,7 @@ describe('users and reviews', () => {
         // grab a user by id 3
         const theUser = await User.getById(3);
         // then get all their reviews
-        const theReviews = await theUser.getReviews();
+        const theReviews = await theUser.reviews;
         // confirm that their reviews are in an array
         expect(theReviews).to.be.an.instanceOf(Array);
         // and that the array is the correct length, which should be 2
