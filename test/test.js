@@ -124,7 +124,7 @@ describe('inner join', () => {
 
     it('should give all reviews by restaurant id', async () => {
         const theRest = await Restaurant.allReviewsById(2);
-        console.log(theRest)
+        // console.log(theRest)
         expect(theRest.length).to.be.equal(2);
     })
 });

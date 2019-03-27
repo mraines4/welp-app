@@ -19,8 +19,7 @@ class Review {
     static getById(id) {
         return db.one(`select * from reviews where id=${id}`)
             .then((revData) => {
-                const revInstance = new Review (revData.id, revData.score, revData.content, revData.restaurant_id, revData.user_id);
-                return revInstance;
+                return new Review (revData.id, revData.score, revData.content, revData.restaurant_id, revData.user_id);
             })
             .catch(() => {
                 return null;

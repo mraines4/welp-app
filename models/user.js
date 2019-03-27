@@ -21,8 +21,7 @@ class User {
                     .then((userData) => {
                         // you must use the new keyword
                         // when you call a JavaScript constructor
-                        const userInstance = new User(userData.id, userData.first_name, userData.last_name, userData.email, userData.password);
-                        return userInstance;
+                        return new User(userData.id, userData.first_name, userData.last_name, userData.email, userData.password);
                     })
                     .catch(() => {
                         return null; //signal an invalid value

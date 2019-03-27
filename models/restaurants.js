@@ -23,8 +23,7 @@ class Restaurant {
     static getById(id) {
         return db.one(`select * from restaurants where id=${id}`)
             .then((restData) => {
-                const restInstance = new Restaurant (restData.id, restData.name, restData.address, restData.street, restData.city, restData.state, restData.phone, restData.menu, restData.picture);
-                return restInstance;
+                return new Restaurant (restData.id, restData.name, restData.address, restData.street, restData.city, restData.state, restData.phone, restData.menu, restData.picture);
             })
             .catch(() => {
                 return null;

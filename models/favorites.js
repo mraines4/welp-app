@@ -17,8 +17,7 @@ class Favorite {
     static getById(id) {
         return db.one(`select * from favorites where id=${id}`)
             .then((favData) => {
-                const favInstance = new Favorite (favData.id, favData.user_id, favData.restaurant_id);
-                return favInstance;
+                return new Favorite (favData.id, favData.user_id, favData.restaurant_id);
             })
             .catch(() => {
                 return null;
