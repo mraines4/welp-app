@@ -119,6 +119,12 @@ describe('inner join', () => {
 
     it('should average the review score for a restaurant by id', async () => {
         const theRest = await Restaurant.averageReviewById(2);
-        expect (parseInt(theRest.average)).to.be.equal(2);
+        expect(parseInt(theRest.average)).to.be.equal(3);
     });
+
+    it('should give all reviews by restaurant id', async () => {
+        const theRest = await Restaurant.allReviewsById(2);
+        console.log(theRest)
+        expect(theRest.length).to.be.equal(2);
+    })
 });

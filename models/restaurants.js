@@ -65,6 +65,16 @@ class Restaurant {
     where res.id = ${id}
     group by res.name`);
     }
+
+    static allReviewsById(id) {
+        return db.any(`select res.name, rev.content, rev.score, usr.first_name ||' '|| usr.last_name as Reviewer
+        from restaurants res
+        inner join reviews rev
+            on res.id = rev.restaurant_id
+        inner join users usr
+            on usr.id = rev.user_id
+    where res.id = ${id}`);
+    }
 };
 
 module.exports = Restaurant;
