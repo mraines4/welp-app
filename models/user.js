@@ -30,6 +30,7 @@ class User {
                     })
     }
 
+    
     // no static since this is an instance method
     // it belongs to the individual instance
     save() {
