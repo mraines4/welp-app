@@ -16,10 +16,30 @@ const server = http.createServer(async (req, res) => {
     // if its /users, send a list of users
     // else, if it doesnt match either, send a welcome message.
 
-    if (req.url === "/restaurants") {
-        const allRestaurants = await Restaurant.getAll();
-        const restaurantJSON = JSON.stringify(allRestaurants);
-        res.end(restaurantJSON);
+    if (req.url.startsWith("/restaurants")) {
+        const parts = req.url.split('/');
+        const method = req.method;
+        if (method === 'GET') {
+            if (parts.length === 2) {
+                const allRestaurants = await Restaurant.getAll();
+                const restaurantJSON = JSON.stringify(allRestaurants);
+                res.end(restaurantJSON);
+            } else if (parts.length === 3) {
+                const restId = parts[2];
+                const theRestaurant = await Restaurant.getById(restId);
+                const restaruantJSON = JSON.stringify(theRestaurant);
+                res.end(restaruantJSON);
+            } else {
+                res.statusCode = 404;
+                res.end('resource not found');
+            }
+        } else if (method === "POST") {
+            res.end(`{message: "Oh you a creater huh?"}`);
+        } else if (method === "PUT") {
+            res.end(`{message: "It sounds like you wanna update"}`)
+        } else if (method === "DELETE") {
+            res.end(`{message: "DONT GO!!!"}`)
+        }
     } else if (req.url.startsWith("/users")) {
 
         
