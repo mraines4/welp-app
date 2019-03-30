@@ -81,7 +81,14 @@ const server = http.createServer(async (req, res) => {
         } else if (method === "PUT") {
             res.end(`{"message": "It sounds like you wanna update"}`)
         } else if (method === "DELETE") {
-            res.end(`{"message": "DONT GO!!!"}`)
+            if (parts.length === 3) {
+                const userId = parts[2];
+                await User.delete(userId);
+                res.end(`{"message": "Deleted user with id ${userId}"}`);
+            } else {
+                res.end(`{"message": "no!"}`);
+            }
+
         }
 
 
