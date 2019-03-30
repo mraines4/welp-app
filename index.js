@@ -14,7 +14,7 @@ const server = http.createServer(async (req, res) => {
 
     // if req.url is /restaurants, send them all restaurants.
     // if its /users, send a list of users
-    // else, if it doesnt match either, send a welcome message.
+    // else, if it doesnt match either, send a welcome "message".
 
     if (req.url.startsWith("/restaurants")) {
         const parts = req.url.split('/');
@@ -34,11 +34,11 @@ const server = http.createServer(async (req, res) => {
                 res.end('resource not found');
             }
         } else if (method === "POST") {
-            res.end(`{message: "Oh you a creater huh?"}`);
+            res.end(`{"message": "Oh you a creater huh?"}`);
         } else if (method === "PUT") {
-            res.end(`{message: "It sounds like you wanna update"}`)
+            res.end(`{"message": "It sounds like you wanna update"}`)
         } else if (method === "DELETE") {
-            res.end(`{message: "DONT GO!!!"}`)
+            res.end(`{"message": "DONT GO!!!"}`)
         }
     } else if (req.url.startsWith("/users")) {
 
@@ -62,17 +62,17 @@ const server = http.createServer(async (req, res) => {
                 res.end('Resource not found.')
             }
         } else if (method === "POST") {
-            res.end(`{message: "Oh you a creater huh?"}`);
+            res.end(`{"message": "Oh you a creater huh?"}`);
         } else if (method === "PUT") {
-            res.end(`{message: "It sounds like you wanna update"}`)
+            res.end(`{"message": "It sounds like you wanna update"}`)
         } else if (method === "DELETE") {
-            res.end(`{message: "DONT GO!!!"}`)
+            res.end(`{"message": "DONT GO!!!"}`)
         }
 
 
     } else {
         res.end(`{
-            message: "Thank you for your patronage. Please send diapers."
+            "message": "Thank you for your patronage. Please send diapers."
         }`);
     }
 });
