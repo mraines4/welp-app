@@ -1,4 +1,5 @@
 const http = require('http');
+const querystring = require('querystring')
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -62,7 +63,20 @@ const server = http.createServer(async (req, res) => {
                 res.end('Resource not found.')
             }
         } else if (method === "POST") {
-            res.end(`{"message": "Oh you a creater huh?"}`);
+
+            let body =  '';
+            req.on('data', (chunk) => {
+                body += chunk.toString();
+            });
+            
+            req.on('end', () => {
+                const parsedBody = querystring.parse(body);
+                console.log('========')
+                console.log(parsedBody);
+                console.log('^^^^^^^^^^^^^^')
+                res.end(`{"message": "Oh you a creater huh?"}`);
+            })
+
         } else if (method === "PUT") {
             res.end(`{"message": "It sounds like you wanna update"}`)
         } else if (method === "DELETE") {
