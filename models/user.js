@@ -13,6 +13,15 @@ class User {
         this.lastName = last_name;
         this.email = email;
         this.password = password;
+
+        
+    }
+
+    static getAll() {
+        return db.any(`select * from users`)
+            .catch(() => {
+                return null;
+            })
     }
     // "static" means that the funciton is something
     // the class can do, but an instance cannot
