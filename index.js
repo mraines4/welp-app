@@ -42,7 +42,11 @@ const server = http.createServer(async (req, res) => {
                 res.end('Resource not found.')
             }
         } else if (method === "POST") {
-            res.end(`{message: "no soup for you"}`);
+            res.end(`{message: "Oh you a creater huh?"}`);
+        } else if (method === "PUT") {
+            res.end(`{message: "It sounds like you wanna update"}`)
+        } else if (method === "DELETE") {
+            res.end(`{message: "DONT GO!!!"}`)
         }
 
 
