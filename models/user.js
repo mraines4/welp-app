@@ -17,6 +17,23 @@ class User {
         
     }
 
+    static add(userData) {
+        // do an insert into the database
+        // not using ${} because i dont want to interpolate
+        // using ($) so that pg-promise does *safe* interpolation
+        return db.one(`insert into users 
+            (first_name, last_name, email, password) 
+        values
+            ($1, $2, $3, $4)
+        returning id
+            `, [userData.first_name, userData.last_name, userData.email, userData.password])
+            .then((data) => {
+                console.log('the thing happened')
+                console.log(`new user id is ${data.id}`);
+                return data.id;
+            })
+    }
+
     static getAll() {
         return db.any(`select * from users`)
         .then((arrayOfUsers) => {

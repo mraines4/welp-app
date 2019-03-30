@@ -69,12 +69,13 @@ const server = http.createServer(async (req, res) => {
                 body += chunk.toString();
             });
             
-            req.on('end', () => {
+            req.on('end', async () => {
                 const parsedBody = querystring.parse(body);
                 console.log('========')
                 console.log(parsedBody);
                 console.log('^^^^^^^^^^^^^^')
-                res.end(`{"message": "Oh you a creater huh?"}`);
+                const newUserId = await User.add(parsedBody);
+                res.end(`{"id": ${newUserId}`);
             })
 
         } else if (method === "PUT") {
