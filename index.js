@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const http = require('http');
+// const http = require('http');
 const querystring = require('querystring')
 
 const hostname = '127.0.0.1';
@@ -25,6 +25,36 @@ app.get('/users', async (req, res) => {
 app.get('/users/:id', async (req, res) => {
     const theUser = await User.getById(req.params.id);
     res.json(theUser);
+});
+
+app.post('/users', async (req,res) => {
+    let body =  '';
+    req.on('data', (chunk) => {
+        body += chunk.toString();
+    });
+    
+    req.on('end', async () => {
+        const parsedBody = querystring.parse(body);
+        console.log('========')
+        console.log(parsedBody);
+        console.log('^^^^^^^^^^^^^^')
+        const newUserId = await User.add(parsedBody);
+        res.json(`{"id": ${newUserId}`);
+    })
+});
+
+// app.put('/users', async (req, res) => {
+//     res.json('sounds like you wanna update');
+// });
+
+app.delete('/users/:id/delete', async(req, res) => {
+    const {id} = req.params
+    await User.delete(id);
+    res.json({message: `Deleted user with id ${id}`});
+});
+
+app.all('*', (req, res) => {
+    res.json({message: "Thank you for your patronage. Please send diapers."});
 });
 
 app.listen(port, () => {
