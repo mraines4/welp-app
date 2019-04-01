@@ -44,13 +44,13 @@ app.post('/users', async (req,res) => {
         console.log(parsedBody);
         console.log('^^^^^^^^^^^^^^')
         const newUserId = await User.add(parsedBody);
-        res.json(`{"id": ${newUserId}`);
+        res.json({id: `${newUserId}`});
     })
 });
 
-// app.put('/users', async (req, res) => {
-//     res.json('sounds like you wanna update');
-// });
+app.put('/users', async (req, res) => {
+    res.json('sounds like you wanna update');
+});
 
 app.delete('/users/:id/delete', async(req, res) => {
     const {id} = req.params
