@@ -18,6 +18,11 @@ app.get('/restaurants', async (req, res) => {
     res.json(allRestaurants);
 });
 
+app.get('/restaurants/:id', async (req, res) => {
+    const theRestaurant = await Restaurant.getById(req.params.id);
+    res.json(theRestaurant);
+});
+
 app.get('/users', async (req, res) => {
     const allUsers = await User.getAll();
     res.json(allUsers);
