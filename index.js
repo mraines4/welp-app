@@ -16,7 +16,8 @@ app.set('view engine', 'html'); // tell express to use as its view engine the th
 
 app.get('/login', (req,res) => {
     // send them the form!
-    res.send('this is the login form');
+    // res.send('this is the login form');
+    res.render('login-form');
 });
 
 app.get('/restaurants', async (req, res) => {
