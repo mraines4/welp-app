@@ -9,6 +9,7 @@ const port = 3000;
 
 const Restaurant = require('./models/restaurants');
 const User = require('./models/user');
+app.use(express.urlencoded({ extended: true }));
 
 app.engine('html', es6Renderer); // hey app. meet es6Renderer, they speak html
 app.set('views', 'views'); // tell express where to find the view files (the second argument is the name of the directory where my template files will live)
@@ -18,6 +19,13 @@ app.get('/login', (req,res) => {
     // send them the form!
     // res.send('this is the login form');
     res.render('login-form');
+});
+
+// when they submit the form, process the form data
+app.post('/login', (req,res) => {
+    console.log(req.body.email);
+    console.log(req.body.password);
+    res.send('woot woot');
 });
 
 app.get('/restaurants', async (req, res) => {
@@ -69,9 +77,9 @@ app.delete('/users/:id/delete', async(req, res) => {
     res.json({message: `Deleted user with id ${id}`});
 });
 
-app.all('*', (req, res) => {
-    res.json({message: "Thank you for your patronage. Please send diapers."});
-});
+// app.all('*', (req, res) => {
+//     res.json({message: "Thank you for your patronage. Please send diapers."});
+// });
 
 app.listen(port, () => {
     console.log(`server is running on port ${port}`);
