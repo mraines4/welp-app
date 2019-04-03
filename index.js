@@ -1,13 +1,23 @@
 const express = require('express');
 const app = express();
 // const http = require('http');
-const querystring = require('querystring')
+const es6Renderer = require('express-es6-template-engine');
+const querystring = require('querystring');
 
-const hostname = '127.0.0.1';
+// const hostname = '127.0.0.1';
 const port = 3000;
 
 const Restaurant = require('./models/restaurants');
 const User = require('./models/user');
+
+app.engine('html', es6Renderer); // hey app. meet es6Renderer, they speak html
+app.set('views', 'views'); // tell express where to find the view files (the second argument is the name of the directory where my template files will live)
+app.set('view engine', 'html'); // tell express to use as its view engine the thing that speaks html
+
+app.get('/login', (req,res) => {
+    // send them the form!
+    res.send('this is the login form');
+});
 
 app.get('/restaurants', async (req, res) => {
     const allRestaurants = await Restaurant.getAll();
