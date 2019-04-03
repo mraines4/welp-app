@@ -4,6 +4,18 @@ const app = express();
 const es6Renderer = require('express-es6-template-engine');
 const querystring = require('querystring');
 
+// lets express track users as they go page to page
+const session = require('express-session');
+
+// import the session storage module, and wire it up to the session module
+const FileStore = require('session-file-store')(session);
+
+// tell express to use the session modules
+app.use(session({
+    store: new FileStore(), //no options for now
+    secret: 'fdhjkfhdskfhdslkfhjkdsnflds'
+}));
+
 // const hostname = '127.0.0.1';
 const port = 3000;
 
@@ -34,7 +46,12 @@ app.post('/login', async (req,res) => {
     // todo: check password for real
     const theUser = await User.getByEmail(req.body.email);
     if (theUser.checkPassword(req.body.password)) {
-        res.redirect('/dashboard');
+        // save the users id to the session
+        req.session.user = theUser.id;
+        // make sure the session is saved before we redirect
+        req.session.save(() => {
+            res.redirect('/dashboard');
+        })
     } else {
         // send the form back, but with the email already filled out
         res.render('login-form', {
@@ -47,6 +64,7 @@ app.post('/login', async (req,res) => {
 });
 
 app.get('/dashboard', (req,res) => {
+    console.log(`the users id is: ${req.session.user}`);
     res.send('welcome to your welp dashboard');
 })
 
