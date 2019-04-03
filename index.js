@@ -25,8 +25,15 @@ app.get('/login', (req,res) => {
 app.post('/login', (req,res) => {
     console.log(req.body.email);
     console.log(req.body.password);
-    res.send('woot woot');
+    // res.send('woot woot');
+    // lets assume they typed in correct password
+    res.redirect('/dashboard');
+    // todo: check password fgor real
 });
+
+app.get('/dashboard', (req,res) => {
+    res.send('welcome to your welp dashboard');
+})
 
 app.get('/restaurants', async (req, res) => {
     const allRestaurants = await Restaurant.getAll();
