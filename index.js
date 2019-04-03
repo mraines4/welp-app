@@ -18,17 +18,32 @@ app.set('view engine', 'html'); // tell express to use as its view engine the th
 app.get('/login', (req,res) => {
     // send them the form!
     // res.send('this is the login form');
-    res.render('login-form');
+    res.render('login-form', {
+        locals: {
+            email: '',
+            message: ''
+        }
+    });
 });
 
 // when they submit the form, process the form data
-app.post('/login', (req,res) => {
+app.post('/login', async (req,res) => {
     console.log(req.body.email);
     console.log(req.body.password);
     // res.send('woot woot');
-    // lets assume they typed in correct password
-    res.redirect('/dashboard');
-    // todo: check password fgor real
+    // todo: check password for real
+    const theUser = await User.getByEmail(req.body.email);
+    if (theUser.checkPassword(req.body.password)) {
+        res.redirect('/dashboard');
+    } else {
+        // send the form back, but with the email already filled out
+        res.render('login-form', {
+            locals: {
+                email: `${req.body.email}`,
+                message: `${'incorrect password'}`
+            }
+        })
+    }
 });
 
 app.get('/dashboard', (req,res) => {
