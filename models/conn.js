@@ -7,8 +7,8 @@ const pgp = require('pg-promise')({
 });
 
 const options = {
-    host: 'localhost',
-    database: 'restaurants-app'
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME
 };
 
 const db = pgp(options);
