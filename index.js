@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 // const http = require('http');
@@ -13,11 +15,14 @@ const FileStore = require('session-file-store')(session);
 // tell express to use the session modules
 app.use(session({
     store: new FileStore(), //no options for now
-    secret: 'fdhjkfhdskfhdslkfhjkdsnflds'
+    secret: process.env.SESSION_SECRET
 }));
 
 // const hostname = '127.0.0.1';
-const port = 3000;
+const port = process.env.PORT;
+
+const helmet = requre('helmet');
+app.use(helmet());
 
 const Restaurant = require('./models/restaurants');
 const User = require('./models/user');
@@ -38,14 +43,18 @@ app.get('/login', (req,res) => {
     });
 });
 
+const escapeHtml = require('./utils');
+
 // when they submit the form, process the form data
 app.post('/login', async (req,res) => {
     console.log(req.body.email);
     console.log(req.body.password);
     // res.send('woot woot');
     // todo: check password for real
-    const theUser = await User.getByEmail(req.body.email);
-    if (theUser.checkPassword(req.body.password)) {
+    const theEmail = escapeHtml(req.body.email);
+    const thePassword = escapeHtml(req.body.password);
+    const theUser = await User.getByEmail(theEmail);
+    if (theUser.checkPassword(thePassword)) {
         // save the users id to the session
         req.session.user = theUser.id;
         // make sure the session is saved before we redirect
