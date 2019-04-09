@@ -21,7 +21,7 @@ app.use(session({
 // const hostname = '127.0.0.1';
 const port = process.env.PORT;
 
-const helmet = requre('helmet');
+const helmet = require('helmet');
 app.use(helmet());
 
 const Restaurant = require('./models/restaurants');
